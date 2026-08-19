@@ -17,6 +17,7 @@ import 'package:unscroll/features/accountability/presentation/screens/add_partne
 import 'package:unscroll/features/accountability/presentation/screens/accountability_summaries_screen.dart';
 import 'package:unscroll/features/policies/presentation/screens/policy_editor_screen.dart';
 import 'package:unscroll/features/therapist/presentation/screens/therapist_dashboard_screen.dart';
+import 'package:unscroll/features/family_mode/presentation/screens/edit_child_screen.dart';
 
 class AppRoutes {
   static const String home = '/';
@@ -58,7 +59,6 @@ class AppRoutes {
       familyMode: (context) => const FamilyDashboardScreen(),
       familyDashboard: (context) => const FamilyDashboardScreen(),
       familyAddChild: (context) => const AddChildScreen(),
-      familyEditChild: (context) => const SizedBox.shrink(), // TODO: Create edit child screen
       familyChildSummary: (context) => const SizedBox.shrink(), // TODO: Create child summary screen
       childProtection: (context) => const ChildProtectionScreen(),
       accountability: (context) => const AccountabilityScreen(),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unscroll/features/family_mode/models/family_models.dart';
+import 'package:unscroll/features/family_mode/presentation/screens/edit_child_screen.dart';
 
 class ChildMemberCard extends StatelessWidget {
   final FamilyMember member;
@@ -126,10 +127,15 @@ class ChildMemberCard extends StatelessWidget {
             onSelected: (value) {
               switch (value) {
                 case 'edit':
-                  Navigator.pushNamed(
+                  Navigator.push(
                     context,
-                    '/family-edit-child',
-                    arguments: member.memberId,
+                    MaterialPageRoute(
+                      builder: (context) => EditChildScreen(
+                        childId: member.memberId,
+                        childName: member.name,
+                        childEmail: member.email,
+                      ),
+                    ),
                   );
                   break;
                 case 'view_summary':
