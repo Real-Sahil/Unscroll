@@ -8,6 +8,9 @@ import 'package:unscroll/features/settings/presentation/screens/settings_screen.
 import 'package:unscroll/features/policies/presentation/screens/policies_list_screen.dart';
 import 'package:unscroll/features/profile/presentation/screens/profile_screen.dart';
 import 'package:unscroll/features/profile/presentation/screens/achievements_screen.dart';
+import 'package:unscroll/features/family_mode/presentation/screens/family_dashboard_screen.dart';
+import 'package:unscroll/features/family_mode/presentation/screens/add_child_screen.dart';
+import 'package:unscroll/features/family_mode/presentation/screens/child_protection_screen.dart';
 
 class AppRoutes {
   static const String home = '/';
@@ -20,6 +23,11 @@ class AppRoutes {
   static const String profile = '/profile';
   static const String achievements = '/achievements';
   static const String familyMode = '/family-mode';
+  static const String familyDashboard = '/family-dashboard';
+  static const String familyAddChild = '/family-add-child';
+  static const String familyEditChild = '/family-edit-child';
+  static const String familyChildSummary = '/family-child-summary';
+  static const String childProtection = '/child-protection';
   static const String accountability = '/accountability';
 
   static Map<String, WidgetBuilder> get routes {
@@ -35,7 +43,12 @@ class AppRoutes {
       relapseLog: (context) => const RelapseLogScreen(),
       profile: (context) => const ProfileScreen(),
       achievements: (context) => const AchievementsScreen(),
-      familyMode: (context) => const SizedBox.shrink(),
+      familyMode: (context) => const FamilyDashboardScreen(),
+      familyDashboard: (context) => const FamilyDashboardScreen(),
+      familyAddChild: (context) => const AddChildScreen(),
+      familyEditChild: (context) => const SizedBox.shrink(), // TODO: Create edit child screen
+      familyChildSummary: (context) => const SizedBox.shrink(), // TODO: Create child summary screen
+      childProtection: (context) => const ChildProtectionScreen(),
       accountability: (context) => const SizedBox.shrink(),
     };
   }

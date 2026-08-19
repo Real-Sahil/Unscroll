@@ -2,6 +2,7 @@ enum FamilyRole { parent, child, none }
 
 class FamilyMember {
   final String id;
+  final String memberId;
   final String userId;
   final String name;
   final String email;
@@ -11,6 +12,7 @@ class FamilyMember {
 
   FamilyMember({
     required this.id,
+    required this.memberId,
     required this.userId,
     required this.name,
     required this.email,
@@ -21,6 +23,7 @@ class FamilyMember {
 
   FamilyMember copyWith({
     String? id,
+    String? memberId,
     String? userId,
     String? name,
     String? email,
@@ -30,6 +33,7 @@ class FamilyMember {
   }) {
     return FamilyMember(
       id: id ?? this.id,
+      memberId: memberId ?? this.memberId,
       userId: userId ?? this.userId,
       name: name ?? this.name,
       email: email ?? this.email,
@@ -92,6 +96,7 @@ class ChildPolicy {
   final String id;
   final String childId;
   final String parentId;
+  final String name;
   final bool canDisableProtection;
   final bool canViewStats;
   final bool canChangeSettings;
@@ -103,6 +108,7 @@ class ChildPolicy {
     required this.id,
     required this.childId,
     required this.parentId,
+    this.name = 'Default Protection',
     this.canDisableProtection = false,
     this.canViewStats = true,
     this.canChangeSettings = false,
@@ -115,6 +121,7 @@ class ChildPolicy {
     String? id,
     String? childId,
     String? parentId,
+    String? name,
     bool? canDisableProtection,
     bool? canViewStats,
     bool? canChangeSettings,
@@ -126,6 +133,7 @@ class ChildPolicy {
       id: id ?? this.id,
       childId: childId ?? this.childId,
       parentId: parentId ?? this.parentId,
+      name: name ?? this.name,
       canDisableProtection: canDisableProtection ?? this.canDisableProtection,
       canViewStats: canViewStats ?? this.canViewStats,
       canChangeSettings: canChangeSettings ?? this.canChangeSettings,

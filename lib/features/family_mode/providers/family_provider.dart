@@ -72,6 +72,12 @@ final familyProvider =
   return FamilyNotifier();
 });
 
+/// Provider for family members
+final familyMembersProvider = Provider((ref) {
+  final family = ref.watch(familyProvider);
+  return family?.members ?? [];
+});
+
 /// Provider for child members
 final childrenProvider = Provider((ref) {
   final family = ref.watch(familyProvider);
@@ -82,6 +88,13 @@ final childrenProvider = Provider((ref) {
 final childPoliciesProvider = Provider((ref) {
   final family = ref.watch(familyProvider);
   return family?.childPolicies ?? [];
+});
+
+/// Provider for current user's family role
+final familyRoleProvider = Provider((ref) {
+  // This would normally determine role from auth context
+  // For now returning parent as default
+  return FamilyRole.parent;
 });
 
 class FamilyInviteNotifier extends StateNotifier<List<FamilyInvite>> {
@@ -121,6 +134,12 @@ final familyInviteProvider =
 
 /// Provider for pending invites
 final pendingInvitesProvider = Provider((ref) {
+  final invites = ref.watch(familyInviteProvider);
+  return invites.where((i) => !i.accepted && i.canAccept).toList();
+});
+
+/// Provider for pending family invites (alias for consistency)
+final pendingFamilyInvitesProvider = Provider((ref) {
   final invites = ref.watch(familyInviteProvider);
   return invites.where((i) => !i.accepted && i.canAccept).toList();
 });
