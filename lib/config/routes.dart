@@ -5,6 +5,7 @@ import 'package:unscroll/features/auth/presentation/screens/login_screen.dart';
 import 'package:unscroll/features/auth/presentation/screens/signup_screen.dart';
 import 'package:unscroll/features/relapse_log/presentation/screens/relapse_log_screen.dart';
 import 'package:unscroll/features/settings/presentation/screens/settings_screen.dart';
+import 'package:unscroll/features/settings/presentation/screens/premium_screen.dart';
 import 'package:unscroll/features/policies/presentation/screens/policies_list_screen.dart';
 import 'package:unscroll/features/profile/presentation/screens/profile_screen.dart';
 import 'package:unscroll/features/profile/presentation/screens/achievements_screen.dart';
@@ -21,6 +22,7 @@ class AppRoutes {
   static const String auth = '/auth';
   static const String dashboard = '/dashboard';
   static const String settings = '/settings';
+  static const String premium = '/premium';
   static const String policies = '/policies';
   static const String relapseLog = '/relapse-log';
   static const String profile = '/profile';
@@ -44,6 +46,7 @@ class AppRoutes {
       auth: (context) => const LoginScreen(),
       dashboard: (context) => const HomeScreen(),
       settings: (context) => const SettingsScreen(),
+      premium: (context) => const PremiumScreen(),
       policies: (context) => const PoliciesListScreen(),
       relapseLog: (context) => const RelapseLogScreen(),
       profile: (context) => const ProfileScreen(),
