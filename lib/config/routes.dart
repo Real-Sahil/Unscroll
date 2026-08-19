@@ -16,6 +16,7 @@ import 'package:unscroll/features/accountability/presentation/screens/accountabi
 import 'package:unscroll/features/accountability/presentation/screens/add_partner_screen.dart';
 import 'package:unscroll/features/accountability/presentation/screens/accountability_summaries_screen.dart';
 import 'package:unscroll/features/policies/presentation/screens/policy_editor_screen.dart';
+import 'package:unscroll/features/therapist/presentation/screens/therapist_dashboard_screen.dart';
 
 class AppRoutes {
   static const String home = '/';
@@ -38,6 +39,7 @@ class AppRoutes {
   static const String accountabilityAddPartner = '/accountability-add-partner';
   static const String accountabilitySummary = '/accountability-summary';
   static const String policyEditor = '/policy-editor';
+  static const String therapistDashboard = '/therapist-dashboard';
 
   static Map<String, WidgetBuilder> get routes {
     return {
@@ -63,6 +65,7 @@ class AppRoutes {
       accountabilityAddPartner: (context) => const AddPartnerScreen(),
       accountabilitySummary: (context) => const AccountabilitySummariesScreen(),
       policyEditor: (context) => const PolicyEditorScreen(),
+      therapistDashboard: (context) => const TherapistDashboardScreen(),
     };
   }
 }
