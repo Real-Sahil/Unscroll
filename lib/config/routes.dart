@@ -11,6 +11,9 @@ import 'package:unscroll/features/profile/presentation/screens/achievements_scre
 import 'package:unscroll/features/family_mode/presentation/screens/family_dashboard_screen.dart';
 import 'package:unscroll/features/family_mode/presentation/screens/add_child_screen.dart';
 import 'package:unscroll/features/family_mode/presentation/screens/child_protection_screen.dart';
+import 'package:unscroll/features/accountability/presentation/screens/accountability_screen.dart';
+import 'package:unscroll/features/accountability/presentation/screens/add_partner_screen.dart';
+import 'package:unscroll/features/accountability/presentation/screens/accountability_summaries_screen.dart';
 
 class AppRoutes {
   static const String home = '/';
@@ -29,6 +32,8 @@ class AppRoutes {
   static const String familyChildSummary = '/family-child-summary';
   static const String childProtection = '/child-protection';
   static const String accountability = '/accountability';
+  static const String accountabilityAddPartner = '/accountability-add-partner';
+  static const String accountabilitySummary = '/accountability-summary';
 
   static Map<String, WidgetBuilder> get routes {
     return {
@@ -49,7 +54,9 @@ class AppRoutes {
       familyEditChild: (context) => const SizedBox.shrink(), // TODO: Create edit child screen
       familyChildSummary: (context) => const SizedBox.shrink(), // TODO: Create child summary screen
       childProtection: (context) => const ChildProtectionScreen(),
-      accountability: (context) => const SizedBox.shrink(),
+      accountability: (context) => const AccountabilityScreen(),
+      accountabilityAddPartner: (context) => const AddPartnerScreen(),
+      accountabilitySummary: (context) => const AccountabilitySummariesScreen(),
     };
   }
 }
