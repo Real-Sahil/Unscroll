@@ -1,15 +1,13 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "UnScroll - Block Reels & Shorts",
   "version": "1.0.0",
   "description": "Block Instagram Reels, YouTube Shorts, TikTok, and other short-form video content to help you stay focused.",
   "permissions": [
     "storage",
-    "scripting",
     "activeTab",
-    "tabs"
-  ],
-  "host_permissions": [
+    "webRequest",
+    "webRequestBlocking",
     "*://instagram.com/*",
     "*://www.instagram.com/*",
     "*://youtube.com/*",
@@ -21,7 +19,7 @@
     "*://www.facebook.com/*"
   ],
   "background": {
-    "service_worker": "background.js"
+    "scripts": ["background.js"]
   },
   "content_scripts": [
     {
@@ -41,9 +39,10 @@
       "run_at": "document_start"
     }
   ],
-  "action": {
+  "browser_action": {
     "default_popup": "popup.html",
-    "default_title": "UnScroll - Focus Mode"
+    "default_title": "UnScroll - Focus Mode",
+    "default_icon": "images/icon-32.png"
   },
   "icons": {
     "16": "images/icon-16.png",
