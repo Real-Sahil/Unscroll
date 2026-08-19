@@ -4,6 +4,8 @@ import 'package:unscroll/features/home/presentation/screens/home_screen.dart';
 import 'package:unscroll/features/auth/presentation/screens/login_screen.dart';
 import 'package:unscroll/features/auth/presentation/screens/signup_screen.dart';
 import 'package:unscroll/features/relapse_log/presentation/screens/relapse_log_screen.dart';
+import 'package:unscroll/features/settings/presentation/screens/settings_screen.dart';
+import 'package:unscroll/features/policies/presentation/screens/policies_list_screen.dart';
 
 class AppRoutes {
   static const String home = '/';
@@ -24,8 +26,8 @@ class AppRoutes {
       onboarding: (context) => const OnboardingScreen(),
       auth: (context) => const LoginScreen(),
       dashboard: (context) => const HomeScreen(),
-      settings: (context) => const SizedBox.shrink(),
-      policies: (context) => const SizedBox.shrink(),
+      settings: (context) => const SettingsScreen(),
+      policies: (context) => const PoliciesListScreen(),
       relapseLog: (context) => const RelapseLogScreen(),
       familyMode: (context) => const SizedBox.shrink(),
       accountability: (context) => const SizedBox.shrink(),
