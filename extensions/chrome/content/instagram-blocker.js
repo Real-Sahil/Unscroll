@@ -1,5 +1,5 @@
 /**
- * Instagram Reels & Stories Blocker
+ * UnScroll - Instagram Reels & Stories Blocker
  * Blocks Instagram Reels tab, Stories, and disables autoplay
  */
 
@@ -62,7 +62,7 @@
     if (e.target.href && (e.target.href.includes('/reels/') || e.target.href.includes('/stories/'))) {
       e.preventDefault();
       e.stopPropagation();
-      console.log('FocusFeed: Blocked navigation to Reels/Stories');
+      console.log('UnScroll: Blocked navigation to Reels/Stories');
     }
   }
 
@@ -86,5 +86,5 @@
     subtree: true,
   });
 
-  console.log('FocusFeed: Instagram blocker loaded');
+  console.log('UnScroll: Instagram blocker loaded');
 })();

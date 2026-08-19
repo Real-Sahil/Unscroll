@@ -31,19 +31,19 @@ class FocusFeedApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'FocusFeed',
+      title: 'UnScroll',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
-      home: const FocusFeedHome(),
+      home: const UnScrollHome(),
       routes: AppRoutes.routes,
     );
   }
 }
 
-class FocusFeedHome extends StatelessWidget {
-  const FocusFeedHome({super.key});
+class UnScrollHome extends StatelessWidget {
+  const UnScrollHome({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +55,12 @@ class FocusFeedHome extends StatelessWidget {
             const Icon(Icons.shield, size: 80, color: Colors.blue),
             const SizedBox(height: 24),
             Text(
-              'FocusFeed',
+              'UnScroll',
               style: Theme.of(context).textTheme.headlineLarge,
             ),
             const SizedBox(height: 8),
             Text(
-              'Addiction-Focused Doomscroll Blocker',
+              'Reclaim Your Time. Escape the Doomscroll.',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             const SizedBox(height: 48),

@@ -1,9 +1,9 @@
 // App Configuration Constants
 class AppConstants {
   // App Info
-  static const String appName = 'FocusFeed';
+  static const String appName = 'UnScroll';
   static const String appVersion = '0.1.0';
-  static const String bundleId = 'com.focusfeed.app';
+  static const String bundleId = 'com.unscroll.app';
 
   // Timing
   static const int frictionDurationSeconds = 10;

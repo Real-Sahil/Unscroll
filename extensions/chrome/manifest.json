@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "FocusFeed - Doomscroll Blocker",
+  "name": "UnScroll - Doomscroll Blocker",
   "version": "0.1.0",
   "description": "Block Instagram Reels, YouTube Shorts, and TikTok. Designed for addiction recovery.",
   "permissions": [

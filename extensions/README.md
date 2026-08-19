@@ -1,4 +1,4 @@
-# FocusFeed Browser Extensions
+# UnScroll Browser Extensions
 
 Browser extensions for blocking Instagram Reels, YouTube Shorts, and TikTok feeds across Chrome and Safari.
 

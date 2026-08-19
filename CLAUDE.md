@@ -1,8 +1,8 @@
-# FocusFeed - Addiction-Focused Doomscroll Blocker
+# UnScroll - Reclaim Your Time. Escape the Doomscroll.
 
 ## Project Overview
 
-FocusFeed is a production-grade Flutter mobile application designed to help users with compulsive short-form video consumption (Instagram Reels, YouTube Shorts, TikTok) regain control through relapse-resistant design, friction layers, panic buttons, and accountability partnerships.
+UnScroll is a production-grade Flutter mobile application designed to help users with compulsive short-form video consumption (Instagram Reels, YouTube Shorts, TikTok) regain control through relapse-resistant design, friction layers, panic buttons, and accountability partnerships.
 
 **Target Users:**
 - Adults losing 30-60+ minutes/day to Reels/Shorts

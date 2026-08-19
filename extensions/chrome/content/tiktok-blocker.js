@@ -1,5 +1,5 @@
 /**
- * TikTok Blocker
+ * UnScroll - TikTok Blocker
  * Blocks TikTok main feed and redirects to safe pages
  */
 
@@ -115,5 +115,5 @@
     subtree: true,
   });
 
-  console.log('FocusFeed: TikTok blocker loaded');
+  console.log('UnScroll: TikTok blocker loaded');
 })();

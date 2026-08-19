@@ -1,5 +1,5 @@
 /**
- * YouTube Shorts Blocker
+ * UnScroll - YouTube Shorts Blocker
  * Blocks YouTube Shorts and disables autoplay
  */
 
@@ -52,7 +52,7 @@
         settingsPanel.click();
       }
     } catch (e) {
-      console.debug('FocusFeed: Could not disable autoplay via UI');
+      console.debug('UnScroll: Could not disable autoplay via UI');
     }
   }
 
@@ -61,7 +61,7 @@
     if (target && target.href && target.href.includes('/shorts/')) {
       e.preventDefault();
       e.stopPropagation();
-      console.log('FocusFeed: Blocked navigation to YouTube Shorts');
+      console.log('UnScroll: Blocked navigation to YouTube Shorts');
     }
   }
 
@@ -83,5 +83,5 @@
     subtree: true,
   });
 
-  console.log('FocusFeed: YouTube blocker loaded');
+  console.log('UnScroll: YouTube blocker loaded');
 })();

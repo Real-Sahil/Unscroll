@@ -1,11 +1,11 @@
 /**
- * FocusFeed Chrome Extension - Background Service Worker
+ * UnScroll Chrome Extension - Background Service Worker
  * Handles policy sync, storage, and cross-tab communication
  */
 
 const STORAGE_KEYS = {
-  POLICY: 'focusfeed_policy',
-  LAST_SYNC: 'focusfeed_last_sync',
+  POLICY: 'unscroll_policy',
+  LAST_SYNC: 'unscroll_last_sync',
   PANIC_COOLDOWN_EXPIRES: 'panic_cooldown_expires',
   PROTECTION_DISABLED_AT: 'protection_disabled_at',
   SESSION_DATA: 'session_data',
@@ -16,7 +16,7 @@ const SYNC_INTERVAL_MINUTES = 30;
 // Initialize extension
 chrome.runtime.onInstalled.addListener(async (details) => {
   if (details.reason === 'install') {
-    console.log('FocusFeed extension installed');
+    console.log('UnScroll extension installed');
     // Open welcome page
     chrome.tabs.create({ url: 'popup/welcome.html' });
   }
@@ -91,9 +91,9 @@ async function syncPolicyFromServer() {
     // For now, use local storage
     localStorage.setItem(STORAGE_KEYS.LAST_SYNC, now.toISOString());
 
-    console.log('FocusFeed: Policy synced');
+    console.log('UnScroll: Policy synced');
   } catch (error) {
-    console.error('FocusFeed: Sync failed', error);
+    console.error('UnScroll: Sync failed', error);
   }
 }
 
@@ -111,7 +111,7 @@ function logEvent(event) {
       chrome.storage.local.set({ [STORAGE_KEYS.SESSION_DATA]: events });
     });
   } catch (error) {
-    console.error('FocusFeed: Failed to log event', error);
+    console.error('UnScroll: Failed to log event', error);
   }
 }
 
@@ -124,4 +124,4 @@ chrome.alarms.onAlarm.addListener((alarm) => {
   }
 });
 
-console.log('FocusFeed: Background service worker loaded');
+console.log('UnScroll: Background service worker loaded');
