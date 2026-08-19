@@ -1,0 +1,98 @@
+name: focusfeed
+description: Addiction-focused doomscroll blocker for Instagram Reels, YouTube Shorts, and TikTok.
+publish_to: 'none'
+
+version: 0.1.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management & Reactive
+  provider: ^6.4.0
+  riverpod: ^2.4.0
+  flutter_riverpod: ^2.4.0
+
+  # Supabase Backend
+  supabase_flutter: ^1.10.0
+  supabase: ^1.11.0
+
+  # Local Storage & Security
+  flutter_secure_storage: ^9.0.0
+  shared_preferences: ^2.2.0
+  hive: ^2.2.0
+  hive_flutter: ^1.1.0
+
+  # Authentication
+  local_auth: ^2.1.0
+
+  # Utilities
+  uuid: ^4.0.0
+  intl: ^0.19.0
+  freezed_annotation: ^2.4.0
+  json_annotation: ^4.8.0
+  http: ^1.1.0
+  url_launcher: ^6.1.0
+
+  # Notifications
+  flutter_local_notifications: ^16.1.0
+  timezone: ^0.9.0
+
+  # Platform-Specific (Android)
+  flutter_accessibility_service: ^1.0.0
+
+  # Animations & UI
+  rive: ^0.11.0
+  animations: ^2.0.0
+  flutter_animate: ^4.2.0
+
+  # Logging & Analytics
+  logger: ^2.0.0
+  firebase_core: ^2.24.0
+  firebase_analytics: ^10.8.0
+
+  # Environment Configuration
+  flutter_dotenv: ^5.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_linter: ^2.0.0
+  build_runner: ^2.4.0
+  freezed: ^2.4.0
+  json_serializable: ^6.7.0
+  mockito: ^5.4.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/animations/
+    - assets/icons/
+    - .env
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700
+
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+        - asset: assets/fonts/Inter-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Inter-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Inter-Bold.ttf
+          weight: 700
