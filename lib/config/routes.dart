@@ -19,6 +19,7 @@ import 'package:unscroll/features/policies/presentation/screens/policy_editor_sc
 import 'package:unscroll/features/therapist/presentation/screens/therapist_dashboard_screen.dart';
 import 'package:unscroll/features/family_mode/presentation/screens/edit_child_screen.dart';
 import 'package:unscroll/features/analytics/presentation/screens/analytics_screen.dart';
+import 'package:unscroll/features/deep_linking/presentation/screens/notification_preferences_screen.dart';
 
 class AppRoutes {
   static const String home = '/';
@@ -43,6 +44,7 @@ class AppRoutes {
   static const String policyEditor = '/policy-editor';
   static const String therapistDashboard = '/therapist-dashboard';
   static const String analytics = '/analytics';
+  static const String notificationPreferences = '/notification-preferences';
 
   static Map<String, WidgetBuilder> get routes {
     return {
@@ -69,6 +71,7 @@ class AppRoutes {
       policyEditor: (context) => const PolicyEditorScreen(),
       therapistDashboard: (context) => const TherapistDashboardScreen(),
       analytics: (context) => const AnalyticsScreen(),
+      notificationPreferences: (context) => const NotificationPreferencesScreen(),
     };
   }
 }
