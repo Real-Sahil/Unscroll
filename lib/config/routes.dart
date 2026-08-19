@@ -12,6 +12,7 @@ import 'package:unscroll/features/profile/presentation/screens/achievements_scre
 import 'package:unscroll/features/family_mode/presentation/screens/family_dashboard_screen.dart';
 import 'package:unscroll/features/family_mode/presentation/screens/add_child_screen.dart';
 import 'package:unscroll/features/family_mode/presentation/screens/child_protection_screen.dart';
+import 'package:unscroll/features/family_mode/presentation/screens/family_child_summary_screen.dart';
 import 'package:unscroll/features/accountability/presentation/screens/accountability_screen.dart';
 import 'package:unscroll/features/accountability/presentation/screens/add_partner_screen.dart';
 import 'package:unscroll/features/accountability/presentation/screens/accountability_summaries_screen.dart';
@@ -20,9 +21,12 @@ import 'package:unscroll/features/therapist/presentation/screens/therapist_dashb
 import 'package:unscroll/features/family_mode/presentation/screens/edit_child_screen.dart';
 import 'package:unscroll/features/analytics/presentation/screens/analytics_screen.dart';
 import 'package:unscroll/features/deep_linking/presentation/screens/notification_preferences_screen.dart';
+import 'package:unscroll/features/panic_button/presentation/screens/panic_button_screen.dart';
 
 class AppRoutes {
   static const String home = '/';
+  static const String login = '/login';
+  static const String signup = '/signup';
   static const String onboarding = '/onboarding';
   static const String auth = '/auth';
   static const String dashboard = '/dashboard';
@@ -43,6 +47,7 @@ class AppRoutes {
   static const String accountabilitySummary = '/accountability-summary';
   static const String policyEditor = '/policy-editor';
   static const String therapistDashboard = '/therapist-dashboard';
+  static const String panicButton = '/panic-button';
   static const String analytics = '/analytics';
   static const String notificationPreferences = '/notification-preferences';
 
@@ -63,13 +68,18 @@ class AppRoutes {
       familyMode: (context) => const FamilyDashboardScreen(),
       familyDashboard: (context) => const FamilyDashboardScreen(),
       familyAddChild: (context) => const AddChildScreen(),
-      familyChildSummary: (context) => const SizedBox.shrink(), // TODO: Create child summary screen
+      familyEditChild: (context) => const EditChildScreen(),
+      familyChildSummary: (context) {
+        // Extract childId from navigation arguments
+        return const FamilyChildSummaryScreen(childId: '');
+      },
       childProtection: (context) => const ChildProtectionScreen(),
       accountability: (context) => const AccountabilityScreen(),
       accountabilityAddPartner: (context) => const AddPartnerScreen(),
       accountabilitySummary: (context) => const AccountabilitySummariesScreen(),
       policyEditor: (context) => const PolicyEditorScreen(),
       therapistDashboard: (context) => const TherapistDashboardScreen(),
+      panicButton: (context) => const PanicButtonScreen(),
       analytics: (context) => const AnalyticsScreen(),
       notificationPreferences: (context) => const NotificationPreferencesScreen(),
     };
