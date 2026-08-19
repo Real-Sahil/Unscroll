@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:unscroll/features/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:unscroll/features/home/presentation/screens/home_screen.dart';
+import 'package:unscroll/features/auth/presentation/screens/login_screen.dart';
+import 'package:unscroll/features/auth/presentation/screens/signup_screen.dart';
+import 'package:unscroll/features/relapse_log/presentation/screens/relapse_log_screen.dart';
 
 class AppRoutes {
   static const String home = '/';
@@ -16,12 +19,14 @@ class AppRoutes {
   static Map<String, WidgetBuilder> get routes {
     return {
       home: (context) => const HomeScreen(),
+      login: (context) => const LoginScreen(),
+      signup: (context) => const SignUpScreen(),
       onboarding: (context) => const OnboardingScreen(),
-      auth: (context) => const SizedBox.shrink(),
+      auth: (context) => const LoginScreen(),
       dashboard: (context) => const HomeScreen(),
       settings: (context) => const SizedBox.shrink(),
       policies: (context) => const SizedBox.shrink(),
-      relapseLog: (context) => const SizedBox.shrink(),
+      relapseLog: (context) => const RelapseLogScreen(),
       familyMode: (context) => const SizedBox.shrink(),
       accountability: (context) => const SizedBox.shrink(),
     };
