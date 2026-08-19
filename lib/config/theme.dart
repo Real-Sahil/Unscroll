@@ -25,9 +25,17 @@ class AppColors {
 
   // Semantic colors
   static const Color success = Color(0xFF00AA66);
+  static const Color successLight = Color(0xFFE6F7F1);
   static const Color warning = Color(0xFFFF8C00);
   static const Color error = Color(0xFFCC3333);
   static const Color info = Color(0xFF0066CC);
+
+  // Text colors
+  static const Color textPrimary = Color(0xFF1A1A1A);
+  static const Color textSecondary = Color(0xFF666666);
+
+  // Border color
+  static const Color borderColor = Color(0xFFE0E0E0);
 
   // Dark mode variants
   static const Color darkBg = Color(0xFF121212);

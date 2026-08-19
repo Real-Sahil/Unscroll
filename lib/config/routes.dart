@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unscroll/features/onboarding/presentation/screens/onboarding_screen.dart';
 
 class AppRoutes {
   static const String home = '/';
@@ -14,7 +15,7 @@ class AppRoutes {
   static Map<String, WidgetBuilder> get routes {
     return {
       home: (context) => const SizedBox.shrink(),
-      onboarding: (context) => const SizedBox.shrink(),
+      onboarding: (context) => const OnboardingScreen(),
       auth: (context) => const SizedBox.shrink(),
       dashboard: (context) => const SizedBox.shrink(),
       settings: (context) => const SizedBox.shrink(),
