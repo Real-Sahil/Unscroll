@@ -6,6 +6,8 @@ import 'package:unscroll/features/auth/presentation/screens/signup_screen.dart';
 import 'package:unscroll/features/relapse_log/presentation/screens/relapse_log_screen.dart';
 import 'package:unscroll/features/settings/presentation/screens/settings_screen.dart';
 import 'package:unscroll/features/policies/presentation/screens/policies_list_screen.dart';
+import 'package:unscroll/features/profile/presentation/screens/profile_screen.dart';
+import 'package:unscroll/features/profile/presentation/screens/achievements_screen.dart';
 
 class AppRoutes {
   static const String home = '/';
@@ -15,6 +17,8 @@ class AppRoutes {
   static const String settings = '/settings';
   static const String policies = '/policies';
   static const String relapseLog = '/relapse-log';
+  static const String profile = '/profile';
+  static const String achievements = '/achievements';
   static const String familyMode = '/family-mode';
   static const String accountability = '/accountability';
 
@@ -29,6 +33,8 @@ class AppRoutes {
       settings: (context) => const SettingsScreen(),
       policies: (context) => const PoliciesListScreen(),
       relapseLog: (context) => const RelapseLogScreen(),
+      profile: (context) => const ProfileScreen(),
+      achievements: (context) => const AchievementsScreen(),
       familyMode: (context) => const SizedBox.shrink(),
       accountability: (context) => const SizedBox.shrink(),
     };
