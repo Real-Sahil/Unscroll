@@ -1,6 +1,10 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import auth from "./auth";
+import policies from "./policies";
+import blockedAttempts from "./blocked-attempts";
+import panicButton from "./panic-button";
+import user from "./user";
 import { verifyJWT, rateLimitCheck } from "./utils";
 
 interface Bindings {
@@ -62,10 +66,14 @@ app.get("/", (c) => {
   return c.json({ status: "ok", version: "1.0.0" });
 });
 
-// Auth routes
+// API routes
 app.route("/api/auth", auth);
+app.route("/api/policies", policies);
+app.route("/api/blocked-attempts", blockedAttempts);
+app.route("/api/panic-button", panicButton);
+app.route("/api/user", user);
 
-// Placeholder for other API routes
+// Placeholder for remaining API routes (family, accountability, therapist)
 app.all("/api/*", (c) => {
   return c.json(
     { error: "Endpoint not implemented", path: c.req.path },

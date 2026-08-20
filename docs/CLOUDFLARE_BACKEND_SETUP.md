@@ -436,8 +436,8 @@ if (token != null) {
 |-------|------|-----------------|--------|
 | 1 | D1 Database Setup (MCP) | 30 mins | ✅ Complete |
 | 2 | Authentication Workers | 4-5 hours | ✅ Complete |
-| 3 | Core API Endpoints | 6-8 hours | 📝 Next |
-| 4 | Family Mode APIs | 3-4 hours | 📋 Planned |
+| 3 | Core API Endpoints | 6-8 hours | ✅ Complete |
+| 4 | Family Mode APIs | 3-4 hours | 📝 Next |
 | 5 | Accountability APIs | 2-3 hours | 📋 Planned |
 | 6 | Real-time Polling | 2-3 hours | 📋 Planned |
 | 7 | Email & Notifications | 3-4 hours | 📋 Planned |
@@ -445,7 +445,7 @@ if (token != null) {
 | 9 | Testing & Debugging | 4-6 hours | 📋 Planned |
 
 **Total: 28-40 hours**  
-**Progress: 2/9 phases complete (22% of total scope)**
+**Progress: 3/9 phases complete (33% of total scope)**
 
 ---
 
@@ -648,6 +648,243 @@ Phase 3 implementation will add:
 3. Panic button activation
 4. User profile endpoints
 5. Basic authorization checks (users can only access own data)
+
+---
+
+## Phase 3 Implementation: Core API Endpoints
+
+**Status:** ✅ Complete  
+**Completed:** 2026-08-20  
+**Files Created:** 4 TypeScript endpoint modules + updated main app
+
+### Core Features Implemented
+
+#### 1. Policy Management Endpoints
+**File:** `workers/src/policies.ts`
+
+**POST /api/policies** - Create protection policy
+- Required fields: name, blocked_apps[], start_time, end_time, days_of_week
+- Optional: friction_level (1-5, default 3)
+- Validates: at least one blocked app, start/end times, at least one day selected
+- Returns: policy object with generated ID and timestamp
+- Status: 201 (created), 400 (validation error)
+
+**GET /api/policies** - List all user's policies
+- Returns: array of policies with parsed JSON fields (blocked_apps, days_of_week)
+- Ordered by created_at DESC
+- Status: 200 (success)
+
+**PUT /api/policies/:id** - Update policy
+- Partial updates supported (any field combination)
+- Validates: policy ownership
+- Automatically updates updated_at timestamp
+- Status: 200 (success), 403 (unauthorized), 404 (not found)
+
+**DELETE /api/policies/:id** - Delete policy
+- Validates: policy ownership
+- Status: 200 (success), 403 (unauthorized), 404 (not found)
+
+#### 2. Blocked Attempts Tracking
+**File:** `workers/src/blocked-attempts.ts`
+
+**POST /api/blocked-attempts** - Log blocked access attempt
+- Required fields: app_name
+- Optional: content_type (reels, shorts, story, watch), blocked (default true), notes
+- Automatically timestamps
+- Returns: attempt object
+- Status: 201 (created), 400 (validation)
+
+**GET /api/blocked-attempts** - Analytics & history
+- Query parameters (all optional):
+  - start_date: Filter from date
+  - end_date: Filter to date
+  - app_name: Filter by app
+- Returns: array of attempts + aggregated statistics
+- Statistics include:
+  - total, blocked, allowed counts
+  - breakdown by app
+  - breakdown by content type
+- Limited to 100 results
+- Status: 200 (success)
+
+#### 3. Panic Button Activation
+**File:** `workers/src/panic-button.ts`
+
+**POST /api/panic-button/activate** - Emergency protection
+- Required: cooldown_period (7200=2h, 43200=12h, 86400=24h seconds)
+- Optional: notes
+- Validates: only valid cooldown periods accepted
+- Calculates: expires_at based on cooldown
+- Returns: event object with activation details
+- Status: 201 (created), 400 (validation error)
+
+**GET /api/panic-button/status** - Check active protection
+- Returns: active boolean + current_event (if active)
+- Includes: time_remaining_seconds calculation
+- Filters: only non-expired events
+- Status: 200 (success)
+
+**POST /api/panic-button/acknowledge** - Mark event as acknowledged
+- Required: event_id
+- Validates: event ownership
+- Status: 200 (success), 403 (unauthorized), 404 (not found)
+
+#### 4. User Profile & Statistics
+**File:** `workers/src/user.ts`
+
+**GET /api/user/profile** - User details
+- Returns: id, email, name, created_at, is_active
+- Status: 200 (success), 404 (not found)
+
+**PUT /api/user/profile** - Update profile
+- Editable: name field
+- Automatically updates: updated_at timestamp
+- Status: 200 (success), 400 (validation)
+
+**POST /api/user/stats** - User statistics
+- Calculates: 
+  - relapse_stats: total_blocked_attempts, total_allowed_attempts, current_streak_days
+  - panic_stats: total_activations, weekly_activations (last 7 days)
+- Streak calculation: days since last allowed attempt
+- Status: 200 (success)
+
+### Security & Data Isolation
+
+All endpoints enforce:
+1. **Authentication:** Bearer token required (validated JWT)
+2. **Authorization:** Users can only access own data
+  - Policies: filtered by user_id
+  - Blocked attempts: filtered by user_id
+  - Panic events: ownership check on modify operations
+  - User profile: only own profile accessible
+3. **Validation:** Input validation on all POST/PUT operations
+4. **Timestamps:** Automatic CURRENT_TIMESTAMP on creates/updates
+
+### Request/Response Examples
+
+**Create Policy:**
+```bash
+curl -X POST http://localhost:8787/api/policies \
+  -H "Authorization: Bearer {token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Evening Block",
+    "blocked_apps": ["instagram", "youtube", "tiktok"],
+    "start_time": "22:00",
+    "end_time": "07:00",
+    "days_of_week": [0,1,2,3,4,5,6],
+    "friction_level": 4
+  }'
+```
+
+**Activate Panic Button:**
+```bash
+curl -X POST http://localhost:8787/api/panic-button/activate \
+  -H "Authorization: Bearer {token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "cooldown_period": 86400,
+    "notes": "Need emergency block for today"
+  }'
+```
+
+**Get User Stats:**
+```bash
+curl -X POST http://localhost:8787/api/user/stats \
+  -H "Authorization: Bearer {token}"
+```
+
+### Implementation Details
+
+**Policies Module:**
+- JSON serialization: blocked_apps, days_of_week stored as JSON strings
+- Parsed on GET responses for client consumption
+- Partial update support via conditional query building
+
+**Analytics Module:**
+- Statistics calculated from blocked_attempts records
+- Aggregation: by app, by content type
+- Time-based filtering: start_date/end_date queries
+
+**Panic Button:**
+- Cooldown stored in seconds (7200, 43200, 86400)
+- Validation: only accept predefined periods
+- Time calculation: server-side expiry timestamp
+- Active filter: expires_at > NOW
+
+**User Module:**
+- Streak calculation: days between now and last relapse
+- Weekly stats: filter by timestamp > (now - 7 days)
+- Aggregation: COUNT(*) queries with conditional blocking
+
+### Database Integration
+
+All endpoints use D1 with:
+- Prepared statements to prevent SQLi
+- Bind parameters for dynamic values
+- `.first()` for single row queries
+- `.all()` for multiple rows
+- Automatic timestamp handling via DEFAULT CURRENT_TIMESTAMP
+
+### Error Handling
+
+Consistent error responses:
+- 400 Bad Request: Validation errors (missing fields, invalid formats)
+- 401 Unauthorized: Missing or invalid token
+- 403 Forbidden: User lacks permission (e.g., accessing other user's policy)
+- 404 Not Found: Resource doesn't exist
+- 201 Created: Successful resource creation
+- 200 OK: Successful request/update
+
+### File Structure After Phase 3
+
+```
+workers/src/
+├── index.ts              # Main app + middleware + routes
+├── auth.ts              # Authentication (register, login, refresh)
+├── policies.ts          # Policy management (CRUD)
+├── blocked-attempts.ts  # Analytics & relapse logging
+├── panic-button.ts      # Emergency protection
+├── user.ts              # Profile & stats
+└── utils.ts             # JWT, hashing, validation, rate limiting
+```
+
+### Performance Considerations
+
+1. **Database Queries:**
+   - Policies: indexed by user_id for fast list
+   - Blocked attempts: indexed by user_id, timestamp for range queries
+   - Panic events: indexed by user_id, expires_at for active filter
+
+2. **Response Caching:**
+   - KV cache not used for GET endpoints (data freshness priority)
+   - Could cache user profiles (low-change data) in future
+
+3. **Batch Operations:**
+   - Future: Add batch delete policies, batch log attempts
+
+### Known Limitations & Future Work
+
+1. **Pagination:** GET endpoints return first 100 results
+   - Future: Implement cursor-based pagination
+
+2. **Sorting:** Hardcoded sort orders (created_at DESC)
+   - Future: Allow client-specified sort
+
+3. **Filtering:** Basic filter support (date range, app name)
+   - Future: Complex filter combinations, regex support
+
+4. **Transactions:** Single-statement operations only
+   - Future: Multi-statement transactions for data consistency
+
+### Next Steps
+
+Phase 4 will implement family mode features:
+- POST /api/family/invite-child
+- POST /api/family/accept-invite
+- GET /api/family/children
+- GET /api/family/child/:id/summary
+- PUT /api/family/child/:id/policies (parent-controlled)
 
 ---
 
