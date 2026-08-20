@@ -2,7 +2,8 @@ name: Build Flutter Apps
 
 on:
   push:
-    branches: [ main, release ]
+    branches: [ main, release, claude/dart-mobile-content-blocker-11wcm3 ]
+  workflow_dispatch:
 
 env:
   FLUTTER_VERSION: 3.13.0
