@@ -5,6 +5,10 @@ import policies from "./policies";
 import blockedAttempts from "./blocked-attempts";
 import panicButton from "./panic-button";
 import user from "./user";
+import family from "./family";
+import accountability from "./accountability";
+import sync from "./sync";
+import notifications from "./notifications";
 import { verifyJWT, rateLimitCheck } from "./utils";
 
 interface Bindings {
@@ -72,8 +76,12 @@ app.route("/api/policies", policies);
 app.route("/api/blocked-attempts", blockedAttempts);
 app.route("/api/panic-button", panicButton);
 app.route("/api/user", user);
+app.route("/api/family", family);
+app.route("/api/accountability", accountability);
+app.route("/api/sync", sync);
+app.route("/api/notifications", notifications);
 
-// Placeholder for remaining API routes (family, accountability, therapist)
+// 404 for unimplemented endpoints
 app.all("/api/*", (c) => {
   return c.json(
     { error: "Endpoint not implemented", path: c.req.path },
