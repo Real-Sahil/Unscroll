@@ -27,7 +27,7 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
-pubspec.lock
+# pubspec.lock intentionally tracked for reproducible CI builds
 
 # Symbolication related
 app.*.symbols

@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'config/theme.dart';
+import 'config/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Load environment variables
-  await dotenv.load(fileName: '.env');
+  await dotenv.load(fileName: '.env').catchError((_) {});
 
-  runApp(
-    const FocusFeedApp(),
-  );
+  runApp(const FocusFeedApp());
 }
 
 class FocusFeedApp extends StatelessWidget {
@@ -53,7 +51,7 @@ class UnScrollHome extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             const SizedBox(height: 48),
-            ElevatedButton.large(
+            ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/onboarding');
               },
