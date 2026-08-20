@@ -1,1 +1,67 @@
 .env.production
+
+# Flutter
+.dart_tool/
+.flutter-plugins-dependencies
+pubspec.lock
+*.iml
+*.lock
+.packages
+.pub-cache/
+.pub/
+/build/
+flutter_export_environment.sh
+
+# Android
+android/local.properties
+android/gradle.properties
+/android/app/debug
+/android/app/profile
+/android/app/release
+/android/app/src/main/java/io/flutter/generated_plugin_registrant.java
+/android/.gradle/
+
+# iOS
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+ios/Flutter/app.flx
+ios/Flutter/app.zip
+ios/Flutter/flutter_assets/
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/local.properties
+ios/Flutter/GeneratedPluginRegistrant.*
+ios/Runner/GeneratedPluginRegistrant.h
+ios/Runner/GeneratedPluginRegistrant.m
+ios/Podfile.lock
+ios/.symlinks/
+ios/.flutter-root
+ios/Pods/
+ios/Pods-Runner.podspec
+
+# Linux
+linux/flutter/
+
+# macOS
+macos/Flutter/
+
+# Web
+web/flutter_service_worker.js
+
+# Windows
+windows/flutter/generated_plugins.cmake
+windows/flutter/generated_plugin_registrant.cc
+windows/flutter/generated_plugins.cmake
+windows/flutter/generated_pluginscc
+
+# General
+*.swp
+*.swo
+*~
+.DS_Store
+.atom/
+.buildlog
+.history
+.svn/
+migrate_working_dir/
