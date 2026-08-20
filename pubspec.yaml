@@ -12,19 +12,13 @@ dependencies:
     sdk: flutter
 
   # State Management & Reactive
-  provider: ^6.4.0
+  provider: ^6.1.0
   riverpod: ^2.4.0
   flutter_riverpod: ^2.4.0
 
-  # Supabase Backend
-  supabase_flutter: ^1.10.0
-  supabase: ^1.11.0
-
   # Local Storage & Security
-  flutter_secure_storage: ^9.0.0
+  flutter_secure_storage: ^8.1.0
   shared_preferences: ^2.2.0
-  hive: ^2.2.0
-  hive_flutter: ^1.1.0
 
   # Authentication
   local_auth: ^2.1.0
@@ -32,28 +26,17 @@ dependencies:
   # Utilities
   uuid: ^4.0.0
   intl: ^0.19.0
-  freezed_annotation: ^2.4.0
-  json_annotation: ^4.8.0
   http: ^1.1.0
   url_launcher: ^6.1.0
   crypto: ^3.0.0
 
   # Notifications
-  flutter_local_notifications: ^16.1.0
+  flutter_local_notifications: ^14.1.0
   timezone: ^0.9.0
 
-  # Platform-Specific (Android)
-  flutter_accessibility_service: ^1.0.0
-
   # Animations & UI
-  rive: ^0.11.0
   animations: ^2.0.0
-  flutter_animate: ^4.2.0
-
-  # Logging & Analytics
-  logger: ^2.0.0
-  firebase_core: ^2.24.0
-  firebase_analytics: ^10.8.0
+  cupertino_icons: ^1.0.0
 
   # Environment Configuration
   flutter_dotenv: ^5.1.0
@@ -62,7 +45,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_linter: ^2.0.0
+  flutter_lints: ^2.0.0
   build_runner: ^2.4.0
   freezed: ^2.4.0
   json_serializable: ^6.7.0
