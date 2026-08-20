@@ -19,6 +19,7 @@ on:
 jobs:
   build-android:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event.inputs.build_type == 'all' || github.event.inputs.build_type == 'android-only'
     steps:
       - uses: actions/checkout@v3
 
@@ -59,6 +60,7 @@ jobs:
 
   build-ios:
     runs-on: macos-latest
+    if: github.event_name == 'push' || github.event.inputs.build_type == 'all' || github.event.inputs.build_type == 'ios-only'
     steps:
       - uses: actions/checkout@v3
 
