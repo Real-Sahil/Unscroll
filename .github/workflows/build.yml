@@ -16,6 +16,10 @@ on:
           - android-only
           - ios-only
 
+permissions:
+  contents: read
+  actions: read
+
 jobs:
   build-android:
     runs-on: ubuntu-latest
