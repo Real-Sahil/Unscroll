@@ -19,8 +19,8 @@ database_id = "ca72fab6-a375-4f0b-bea8-64aa999d29f9"
 
 [[kv_namespaces]]
 binding = "KV"
-id = ""
-preview_id = ""
+id = "unscroll_rate_limit_kv"
+preview_id = "unscroll_rate_limit_kv_preview"
 
 [env.production.d1_databases]
 binding = "DB"
@@ -29,8 +29,8 @@ database_id = "ca72fab6-a375-4f0b-bea8-64aa999d29f9"
 
 [env.production.kv_namespaces]
 binding = "KV"
-id = ""
-preview_id = ""
+id = "unscroll_rate_limit_kv_prod"
+preview_id = "unscroll_rate_limit_kv_preview"
 
 [build]
 command = "npm run build"

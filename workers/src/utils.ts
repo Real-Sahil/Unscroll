@@ -1,8 +1,11 @@
 import { SignJWT, jwtVerify } from "jose";
-import { TextEncoder } from "util";
 
-const JWT_SECRET = new TextEncoder().encode(
-  globalThis.JWT_SECRET || "fallback-secret-change-in-production"
+declare global {
+  const JWT_SECRET: string | undefined;
+}
+
+const JWT_SECRET_VALUE = new TextEncoder().encode(
+  (globalThis as any).JWT_SECRET || "fallback-secret-change-in-production"
 );
 
 export async function generateJWT(userId: string, expiresIn: number = 86400) {
@@ -11,13 +14,13 @@ export async function generateJWT(userId: string, expiresIn: number = 86400) {
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt(now)
     .setExpirationTime(now + expiresIn)
-    .sign(JWT_SECRET);
+    .sign(JWT_SECRET_VALUE);
   return token;
 }
 
 export async function verifyJWT(token: string) {
   try {
-    const verified = await jwtVerify(token, JWT_SECRET);
+    const verified = await jwtVerify(token, JWT_SECRET_VALUE);
     return verified.payload.sub as string;
   } catch {
     return null;

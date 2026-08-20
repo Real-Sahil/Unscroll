@@ -175,15 +175,18 @@ accountability.get("/therapist/client/:clientId/analytics", async (c) => {
     .bind(clientId, weekAgoDate)
     .first();
 
+  const blockedCount = Number((blockedResult as any)?.count || 0);
+  const allowedCount = Number((allowedResult as any)?.count || 0);
+
   return c.json({
     client_id: clientId,
     analytics: {
-      total_blocked_attempts: (blockedResult as any)?.count || 0,
-      total_allowed_attempts: (allowedResult as any)?.count || 0,
-      total_panic_activations: (panicResult as any)?.count || 0,
-      weekly_blocked_attempts: (weeklyBlockedResult as any)?.count || 0,
-      adherence_rate: blockedResult && blockedResult.count
-        ? Math.round((blockedResult.count / (blockedResult.count + (allowedResult as any)?.count || 1)) * 100)
+      total_blocked_attempts: blockedCount,
+      total_allowed_attempts: allowedCount,
+      total_panic_activations: Number((panicResult as any)?.count || 0),
+      weekly_blocked_attempts: Number((weeklyBlockedResult as any)?.count || 0),
+      adherence_rate: blockedCount > 0
+        ? Math.round((blockedCount / (blockedCount + allowedCount || 1)) * 100)
         : 0,
     },
   });

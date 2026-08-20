@@ -52,12 +52,15 @@ notifications.post("/send-weekly-summaries", async (c) => {
       .bind(userId, weekAgoDate)
       .first();
 
+    const blockedCount = Number((blockedResult as any)?.count || 0);
+    const allowedCount = Number((allowedResult as any)?.count || 0);
+
     const stats = {
-      blocked_attempts: (blockedResult as any)?.count || 0,
-      allowed_attempts: (allowedResult as any)?.count || 0,
-      panic_activations: (panicResult as any)?.count || 0,
-      adherence_rate: blockedResult && blockedResult.count
-        ? Math.round((blockedResult.count / (blockedResult.count + (allowedResult as any)?.count || 1)) * 100)
+      blocked_attempts: blockedCount,
+      allowed_attempts: allowedCount,
+      panic_activations: Number((panicResult as any)?.count || 0),
+      adherence_rate: blockedCount > 0
+        ? Math.round((blockedCount / (blockedCount + allowedCount || 1)) * 100)
         : 0,
     };
 
