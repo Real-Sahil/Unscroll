@@ -34,6 +34,18 @@ jobs:
           flutter pub get
           flutter pub upgrade
 
+      - name: Setup Android signing
+        run: |
+          echo "🔐 Configuring Android signing..."
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > android/app/key.jks
+          cat > android/key.properties << EOF
+          storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}
+          keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
+          storeFile=../app/key.jks
+          EOF
+          echo "✅ Signing configuration ready"
+
       - name: Build APK
         run: |
           echo "🔨 Building Android APK..."
