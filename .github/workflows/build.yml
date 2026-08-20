@@ -19,7 +19,6 @@ on:
 jobs:
   build-android:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' || github.event.inputs.build_type == 'all' || github.event.inputs.build_type == 'android-only'
     steps:
       - uses: actions/checkout@v3
 
@@ -33,19 +32,6 @@ jobs:
           echo "📦 Installing Flutter dependencies..."
           flutter pub get
           flutter pub upgrade
-
-      - name: Setup Android signing
-        if: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
-        run: |
-          echo "🔐 Configuring Android signing..."
-          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > android/app/key.jks
-          cat > android/key.properties << EOF
-          storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}
-          keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
-          storeFile=../app/key.jks
-          EOF
-          echo "✅ Signing configuration ready"
 
       - name: Build APK
         run: |
@@ -73,7 +59,6 @@ jobs:
 
   build-ios:
     runs-on: macos-latest
-    if: github.event_name == 'push' || github.event.inputs.build_type == 'all' || github.event.inputs.build_type == 'ios-only'
     steps:
       - uses: actions/checkout@v3
 
