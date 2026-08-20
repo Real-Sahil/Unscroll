@@ -29,12 +29,24 @@ jobs:
           flutter build apk --release --verbose 2>&1 | tee build.log
           echo "✅ APK complete"
 
-      - name: Find APK Location
+      - name: Find and Copy APK
         if: success()
         run: |
-          echo "Searching for APK files..."
-          find build -name "*.apk" -type f 2>/dev/null || true
-          ls -la build/app/outputs/apk/release/ 2>/dev/null || echo "Standard path not found"
+          echo "=== Searching for APK files ==="
+          find . -name "*.apk" -type f 2>/dev/null | head -20
+          echo ""
+          echo "=== Checking standard paths ==="
+          ls -la build/app/outputs/apk/release/ 2>/dev/null || echo "build/app/outputs/apk/release/ not found"
+          ls -la build/app/outputs/flutter-apk/ 2>/dev/null || echo "build/app/outputs/flutter-apk/ not found"
+          echo ""
+          echo "=== Copying APK to root if found ==="
+          if find . -name "*.apk" -type f -print -quit >/dev/null 2>&1; then
+            APK_FILE=$(find . -name "*.apk" -type f -print -quit)
+            echo "Found APK: $APK_FILE"
+            cp "$APK_FILE" ./app-release.apk || echo "Copy failed"
+          else
+            echo "No APK found!"
+          fi
 
       - name: Upload Build Log on Failure
         if: failure()
@@ -48,7 +60,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: unscroll-app-release.apk
-          path: build/app/outputs/apk/release/*.apk
+          path: app-release.apk
 
   build-ios:
     runs-on: macos-latest
