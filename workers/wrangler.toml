@@ -1,9 +1,9 @@
 name = "unscroll-api"
 account_id = "7ee28ffcbcd3bf2e0c4d6ef4f561906f"
 workers_dev = true
-main = "workers/dist/index.js"
+main = "dist/index.js"
 compatibility_date = "2026-08-20"
-build = { command = "npm run build", cwd = "workers" }
+build = { command = "npm run build" }
 
 [env.production]
 name = "unscroll-api-prod"
@@ -30,7 +30,3 @@ database_id = "ca72fab6-a375-4f0b-bea8-64aa999d29f9"
 [[env.development.kv_namespaces]]
 binding = "KV"
 id = "unscroll_rate_limit_kv"
-
-[build]
-command = "npm run build"
-cwd = "./"
