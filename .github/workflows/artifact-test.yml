@@ -1,0 +1,15 @@
+name: Artifact Test
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: mkdir -p output && echo "test" > output/test.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: test-artifact
+          path: output/test.txt
