@@ -1,23 +1,9 @@
 name: Build Flutter Apps
-description: 'Automated build for iOS and Android Flutter apps'
 
 on:
   push:
     branches: [ main, release ]
   workflow_dispatch:
-    inputs:
-      build_type:
-        description: 'Build type'
-        required: false
-        default: 'all'
-        type: choice
-        options:
-          - all
-          - android-only
-          - ios-only
-
-permissions:
-  contents: read
 
 jobs:
   build-android:
@@ -25,50 +11,24 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '11'
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
-
       - name: Install Flutter
         run: |
-          echo "📥 Installing Flutter 3.13.0..."
           git clone https://github.com/flutter/flutter.git --branch 3.13.0 --depth 1
-          echo "${GITHUB_WORKSPACE}/flutter/bin" >> $GITHUB_PATH
-
-      - name: Get dependencies
-        run: |
-          echo "📦 Installing Flutter dependencies..."
+          export PATH="$PATH:$GITHUB_WORKSPACE/flutter/bin"
+          flutter config --no-analytics
           flutter pub get
-          flutter pub upgrade
 
       - name: Build APK
         run: |
-          echo "🔨 Building Android APK..."
-          flutter build apk --release --verbose
-          echo "✅ APK build complete"
-
-      - name: Build AAB (App Bundle)
-        run: |
-          echo "📦 Building Android App Bundle..."
-          flutter build appbundle --release --verbose
-          echo "✅ AAB build complete"
+          export PATH="$PATH:$GITHUB_WORKSPACE/flutter/bin"
+          flutter build apk --release
+          echo "✅ APK complete"
 
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
           name: unscroll-app-release.apk
           path: build/app/outputs/apk/release/app-release.apk
-
-      - name: Upload AAB
-        uses: actions/upload-artifact@v3
-        with:
-          name: unscroll-app-release.aab
-          path: build/app/outputs/bundle/release/app-release.aab
 
   build-ios:
     runs-on: macos-latest
@@ -77,21 +37,15 @@ jobs:
 
       - name: Install Flutter
         run: |
-          echo "📥 Installing Flutter 3.13.0..."
           git clone https://github.com/flutter/flutter.git --branch 3.13.0 --depth 1
-          echo "${GITHUB_WORKSPACE}/flutter/bin" >> $GITHUB_PATH
-
-      - name: Get dependencies
-        run: |
-          echo "📦 Installing Flutter dependencies..."
+          export PATH="$PATH:$GITHUB_WORKSPACE/flutter/bin"
+          flutter config --no-analytics
           flutter pub get
-          flutter pub upgrade
 
       - name: Build iOS
         run: |
-          echo "🔨 Building iOS app..."
-          flutter build ios --release --no-codesign --verbose
-          echo "✅ iOS build complete"
+          export PATH="$PATH:$GITHUB_WORKSPACE/flutter/bin"
+          flutter build ios --release --no-codesign
 
       - name: Package IPA
         run: |
