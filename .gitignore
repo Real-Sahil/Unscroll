@@ -55,6 +55,8 @@ android/local.properties
 **/ios/**/*.xcbkptlist
 **/ios/**/*.xcworkspace
 **/ios/**/*.xcodeproj
+!/ios/Runner.xcodeproj/
+!/ios/Runner.xcodeproj/**
 **/ios/**/Flutter/
 **/ios/**/GeneratedPluginRegistrant.*
 **/macos/Flutter/
