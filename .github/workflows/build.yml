@@ -29,6 +29,13 @@ jobs:
           flutter build apk --release --verbose 2>&1 | tee build.log
           echo "✅ APK complete"
 
+      - name: Find APK Location
+        if: success()
+        run: |
+          echo "Searching for APK files..."
+          find build -name "*.apk" -type f 2>/dev/null || true
+          ls -la build/app/outputs/apk/release/ 2>/dev/null || echo "Standard path not found"
+
       - name: Upload Build Log on Failure
         if: failure()
         uses: actions/upload-artifact@v4
@@ -41,7 +48,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: unscroll-app-release.apk
-          path: build/app/outputs/apk/release/app-release.apk
+          path: build/app/outputs/apk/release/*.apk
 
   build-ios:
     runs-on: macos-latest
