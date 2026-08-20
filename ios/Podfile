@@ -1,0 +1,28 @@
+# Podfile
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    flutter_additional_ios_build_settings(target)
+    target.build_configurations.each do |config|
+      config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
+        '$(inherited)',
+        'FLUTTER_FRAMEWORK_DIR=Flutter',
+      ]
+    end
+  end
+end
+
+target 'Runner' do
+  use_frameworks!
+  use_modular_headers!
+
+  flutter_root = File.expand_path(File.join(File.dirname(__FILE__), '..', 'flutter'))
+  load File.join(flutter_root, 'packages', 'flutter_tools', 'bin', 'podhelper')
+
+  flutter_ios_podfile_setup
+
+  post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      flutter_additional_ios_build_settings(target)
+    end
+  end
+end
