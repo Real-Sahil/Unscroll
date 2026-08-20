@@ -65,3 +65,12 @@ windows/flutter/generated_pluginscc
 .history
 .svn/
 migrate_working_dir/
+
+# Node/npm
+node_modules/
+package-lock.json
+npm-debug.log
+yarn-error.log
+
+# Android generated files
+android/app/src/main/java/
