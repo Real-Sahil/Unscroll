@@ -1,6 +1,6 @@
 name = "unscroll-api"
 type = "service"
-account_id = ""
+account_id = "7ee28ffcbcd3bf2e0c4d6ef4f561906f"
 workers_dev = true
 route = ""
 
