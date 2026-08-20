@@ -30,23 +30,11 @@ include ":app"
 def localProperties = new File(rootDir, "local.properties")
 def properties = new Properties()
 
-assert localProperties.exists()
-localProperties.withReader("UTF-8") { reader -> properties.load(reader) }
-
-def flutterSdkPath = properties.getProperty("flutter.sdk")
-assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
-
-def flutterRoot = file(flutterSdkPath).absoluteFile.getParentFile().getAbsolutePath()
-
-logger.quiet("Flutter root: $flutterRoot")
-
-def plugins = new Properties()
-def pluginsFile = new File(flutterRoot, ".pubspec.yaml")
-if (pluginsFile.exists()) {
-    pluginsFile.withReader("UTF-8") { reader -> plugins.load(reader) }
+if (localProperties.exists()) {
+    localProperties.withReader("UTF-8") { reader -> properties.load(reader) }
 }
 
-plugins.each { name, _ ->
-    def pluginDirectory = new File(flutterRoot, ".pub-cache/hosted/pub.dartlang.org/$name")
-    assert pluginDirectory.exists()
+def flutterSdkPath = properties.getProperty("flutter.sdk")
+if (flutterSdkPath == null) {
+    throw new GradleException("flutter.sdk not set in local.properties")
 }
