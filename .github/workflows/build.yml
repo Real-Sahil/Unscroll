@@ -18,12 +18,14 @@ jobs:
         run: |
           git clone https://github.com/flutter/flutter.git --branch $FLUTTER_VERSION --depth 1 ~/flutter
           echo "$HOME/flutter/bin" >> $GITHUB_PATH
+          export PATH="$HOME/flutter/bin:$PATH"
           flutter config --no-analytics
           flutter doctor -v
           flutter pub get
 
       - name: Build APK
         run: |
+          export PATH="$HOME/flutter/bin:$PATH"
           flutter build apk --release --verbose 2>&1 | tee build.log
           echo "✅ APK complete"
 
@@ -50,12 +52,14 @@ jobs:
         run: |
           git clone https://github.com/flutter/flutter.git --branch $FLUTTER_VERSION --depth 1 ~/flutter
           echo "$HOME/flutter/bin" >> $GITHUB_PATH
+          export PATH="$HOME/flutter/bin:$PATH"
           flutter config --no-analytics
           flutter doctor -v
           flutter pub get
 
       - name: Build iOS
         run: |
+          export PATH="$HOME/flutter/bin:$PATH"
           flutter build ios --release --no-codesign --verbose 2>&1 | tee build.log
 
       - name: Upload Build Log on Failure
