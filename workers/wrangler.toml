@@ -2,6 +2,7 @@ name = "unscroll-api"
 account_id = "7ee28ffcbcd3bf2e0c4d6ef4f561906f"
 workers_dev = true
 main = "dist/index.js"
+compatibility_date = "2026-08-20"
 
 [env.production]
 name = "unscroll-api-prod"
