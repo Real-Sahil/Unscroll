@@ -12,7 +12,7 @@ jobs:
   build-android:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install Flutter
         run: |
@@ -26,22 +26,12 @@ jobs:
       - name: Build APK
         run: |
           export PATH="$HOME/flutter/bin:$PATH"
-          flutter build apk --release --verbose 2>&1 | tee build.log
-          echo "✅ APK complete"
-
-      - name: Find and Copy APK
-        if: success()
-        run: |
-          echo "=== Searching for APK files ==="
-          find . -name "*.apk" -type f 2>/dev/null | head -5
-          echo ""
-          if [ -f "build/app/outputs/apk/release/app-release.apk" ]; then
-            cp build/app/outputs/apk/release/app-release.apk ./app-release.apk
-            echo "✅ APK found and copied"
-          else
-            echo "❌ APK not found at expected location"
-            find . -name "*.apk" -type f 2>/dev/null | head -1 | xargs -I {} cp {} ./app-release.apk || echo "Could not find APK"
+          flutter build apk --release 2>&1 | tee build.log
+          if [ ${PIPESTATUS[0]} -ne 0 ]; then
+            echo "❌ APK build failed"
+            exit 1
           fi
+          echo "✅ APK build complete"
 
       - name: Upload Build Log
         if: always()
@@ -55,5 +45,6 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: unscroll-app-release.apk
-          path: app-release.apk
+          name: unscroll-app-release
+          path: build/app/outputs/apk/release/app-release.apk
+          if-no-files-found: error
