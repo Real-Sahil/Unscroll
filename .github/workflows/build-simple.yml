@@ -1,0 +1,20 @@
+name: Build Simple
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "Checked out"
+      - run: flutter --version || echo "Flutter not installed"
+
+  build-ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "Checked out on macOS"
