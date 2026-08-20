@@ -5,8 +5,7 @@ main = "workers/dist/index.js"
 compatibility_date = "2026-08-20"
 
 [build]
-command = "cd workers && npm install && npm run build"
-cwd = "."
+command = "npm run build"
 
 [env.production]
 name = "unscroll-api-prod"

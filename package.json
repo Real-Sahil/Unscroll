@@ -1,0 +1,11 @@
+{
+  "name": "unscroll-monorepo",
+  "version": "1.0.0",
+  "description": "UnScroll - Addiction recovery app",
+  "scripts": {
+    "build": "cd workers && npm install && npm run build",
+    "dev": "cd workers && npm run dev",
+    "test": "cd workers && npm test"
+  },
+  "private": true
+}
