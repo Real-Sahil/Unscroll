@@ -1,48 +1,34 @@
 name = "unscroll-api"
-type = "service"
 account_id = "7ee28ffcbcd3bf2e0c4d6ef4f561906f"
 workers_dev = true
-route = ""
+main = "dist/index.js"
 
 [env.production]
 name = "unscroll-api-prod"
-route = "https://unscroll.yourdomain.workers.dev/*"
+vars = { ENVIRONMENT = "production" }
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "unscroll"
+database_id = "ca72fab6-a375-4f0b-bea8-64aa999d29f9"
+
+[[env.production.kv_namespaces]]
+binding = "KV"
+id = "unscroll_rate_limit_kv_prod"
 
 [env.development]
 name = "unscroll-api-dev"
-route = ""
+vars = { ENVIRONMENT = "development" }
 
-[[d1_databases]]
+[[env.development.d1_databases]]
 binding = "DB"
 database_name = "unscroll"
 database_id = "ca72fab6-a375-4f0b-bea8-64aa999d29f9"
 
-[[kv_namespaces]]
+[[env.development.kv_namespaces]]
 binding = "KV"
 id = "unscroll_rate_limit_kv"
-preview_id = "unscroll_rate_limit_kv_preview"
-
-[env.production.d1_databases]
-binding = "DB"
-database_name = "unscroll"
-database_id = "ca72fab6-a375-4f0b-bea8-64aa999d29f9"
-
-[env.production.kv_namespaces]
-binding = "KV"
-id = "unscroll_rate_limit_kv_prod"
-preview_id = "unscroll_rate_limit_kv_preview"
 
 [build]
 command = "npm run build"
 cwd = "./"
-watch_paths = ["src/**/*.ts"]
-
-[build.upload]
-format = "service-worker"
-
-[env.production.build]
-command = "npm run build"
-cwd = "./"
-
-[env.production.build.upload]
-format = "service-worker"
