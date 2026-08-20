@@ -35,6 +35,6 @@ if (localProperties.exists()) {
 }
 
 def flutterSdkPath = properties.getProperty("flutter.sdk")
-if (flutterSdkPath == null) {
-    throw new GradleException("flutter.sdk not set in local.properties")
+if (flutterSdkPath != null) {
+    includeBuild("${flutterSdkPath}/packages/flutter_tools/gradle")
 }
