@@ -1,0 +1,48 @@
+name = "unscroll-api"
+type = "service"
+account_id = ""
+workers_dev = true
+route = ""
+
+[env.production]
+name = "unscroll-api-prod"
+route = "https://unscroll.yourdomain.workers.dev/*"
+
+[env.development]
+name = "unscroll-api-dev"
+route = ""
+
+[[d1_databases]]
+binding = "DB"
+database_name = "unscroll"
+database_id = "ca72fab6-a375-4f0b-bea8-64aa999d29f9"
+
+[[kv_namespaces]]
+binding = "KV"
+id = ""
+preview_id = ""
+
+[env.production.d1_databases]
+binding = "DB"
+database_name = "unscroll"
+database_id = "ca72fab6-a375-4f0b-bea8-64aa999d29f9"
+
+[env.production.kv_namespaces]
+binding = "KV"
+id = ""
+preview_id = ""
+
+[build]
+command = "npm run build"
+cwd = "./"
+watch_paths = ["src/**/*.ts"]
+
+[build.upload]
+format = "service-worker"
+
+[env.production.build]
+command = "npm run build"
+cwd = "./"
+
+[env.production.build.upload]
+format = "service-worker"

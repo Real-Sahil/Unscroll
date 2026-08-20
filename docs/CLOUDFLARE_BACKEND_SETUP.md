@@ -435,8 +435,8 @@ if (token != null) {
 | Phase | Task | Estimated Time | Status |
 |-------|------|-----------------|--------|
 | 1 | D1 Database Setup (MCP) | 30 mins | ✅ Complete |
-| 2 | Authentication Workers | 4-5 hours | 📝 Next |
-| 3 | Core API Endpoints | 6-8 hours | 📋 Planned |
+| 2 | Authentication Workers | 4-5 hours | ✅ Complete |
+| 3 | Core API Endpoints | 6-8 hours | 📝 Next |
 | 4 | Family Mode APIs | 3-4 hours | 📋 Planned |
 | 5 | Accountability APIs | 2-3 hours | 📋 Planned |
 | 6 | Real-time Polling | 2-3 hours | 📋 Planned |
@@ -444,7 +444,8 @@ if (token != null) {
 | 8 | Flutter Integration | 4-6 hours | 📋 Planned |
 | 9 | Testing & Debugging | 4-6 hours | 📋 Planned |
 
-**Total: 28-40 hours**
+**Total: 28-40 hours**  
+**Progress: 2/9 phases complete (22% of total scope)**
 
 ---
 
@@ -469,6 +470,184 @@ if (token != null) {
 ### Next: Phase 2 - Authentication Workers
 
 The foundation is ready. Next step is building the Workers API layer with JWT authentication, register/login/refresh endpoints, and secure token management via KV storage.
+
+---
+
+## Phase 2 Implementation: Authentication Workers
+
+**Status:** ✅ Complete  
+**Completed:** 2026-08-20  
+**Files Created:** 6 TypeScript + configuration files
+
+### Authentication System Architecture
+
+```
+Flutter App
+    ↓ (REST API + JWT Token)
+Cloudflare Workers (Hono Framework)
+    ↓ (Query/Validate)
+D1 Database + KV Cache
+    ↓
+JWT Token (24-hour expiry)
+```
+
+### Files Created
+
+1. **workers/wrangler.toml** - Cloudflare Workers configuration
+   - D1 database binding (ID: ca72fab6-a375-4f0b-bea8-64aa999d29f9)
+   - KV namespace binding for session caching
+   - Production + development environments
+
+2. **workers/package.json** - Dependencies
+   - `hono` - Lightweight web framework for Workers
+   - `jose` - JWT signing and verification
+   - `typescript` - Type safety
+
+3. **workers/tsconfig.json** - TypeScript configuration
+   - ES2020 target for Cloudflare Workers runtime
+   - Strict type checking enabled
+
+4. **workers/src/index.ts** - Main application
+   - Hono app initialization
+   - Global CORS configuration
+   - Authentication middleware
+   - Route handlers
+
+5. **workers/src/utils.ts** - Cryptographic utilities
+   - `generateJWT()` - Create signed JWT tokens (24-hour expiry)
+   - `verifyJWT()` - Validate JWT tokens
+   - `hashPassword()` - SHA-256 password hashing
+   - `validateEmail()` - Email format validation
+   - `validatePassword()` - Password strength validation (8+ chars)
+   - `rateLimitCheck()` - KV-backed rate limiting
+   - `generateUserId()` - Unique user ID generation
+   - `generateSessionId()` - Session ID generation
+
+6. **workers/src/auth.ts** - Authentication endpoints
+
+### Implemented Endpoints
+
+#### POST /api/auth/register
+Creates new user account.
+- **Request:** email, password (8+ chars), name (optional)
+- **Validation:** Email format, password strength
+- **Rate Limiting:** 5 attempts/hour per email via KV
+- **Returns:** User ID, email, JWT token, 24-hour expiry
+- **Status Codes:** 201 (created), 400 (validation), 409 (duplicate), 429 (rate limited)
+
+#### POST /api/auth/login
+Authenticates user and returns JWT token.
+- **Request:** email, password
+- **Rate Limiting:** 5 attempts/minute per email via KV
+- **Token Caching:** Token stored in KV for fast validation on subsequent requests
+- **Returns:** User ID, email, JWT token, 24-hour expiry
+- **Status Codes:** 200 (success), 401 (invalid), 429 (rate limited)
+
+#### POST /api/auth/refresh
+Generates new JWT token from existing token.
+- **Request:** refresh_token (valid JWT)
+- **Returns:** New JWT token, 24-hour expiry
+- **Status Codes:** 200 (success), 401 (invalid)
+
+### Security Features Implemented
+
+1. **JWT Token Management**
+   - HS256 signing with secret key
+   - 24-hour expiration
+   - Standard claims (iss, sub, iat, exp)
+   - KV cache for fast token validation
+
+2. **Password Security**
+   - SHA-256 hashing (production: should upgrade to Argon2)
+   - No plaintext password storage
+   - Password strength requirement (8+ characters)
+
+3. **Rate Limiting**
+   - Login attempts: 5 per minute per email
+   - Registration attempts: 5 per hour per email
+   - KV-backed with automatic expiration
+
+4. **Input Validation**
+   - Email format validation
+   - Password strength validation
+   - Required field checking
+
+5. **CORS Security**
+   - Configurable origin (set to Flutter app domain in production)
+   - Allows specific HTTP methods
+   - Allows Authorization and Content-Type headers
+
+### Middleware Chain
+
+```
+Incoming Request
+    ↓
+CORS Middleware (allow cross-origin requests)
+    ↓
+Public routes (/api/auth/...) → Skip authentication
+Protected routes (/api/...) → Require Bearer token
+    ↓
+Token Verification (JWT signature + expiry check)
+    ↓
+Route Handler (userId available in context)
+```
+
+### Local Development Setup
+
+```bash
+# Install dependencies
+npm install
+
+# Run locally
+npm run dev
+
+# Test register
+curl -X POST http://localhost:8787/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","password":"testpass123","name":"Test User"}'
+
+# Test login
+curl -X POST http://localhost:8787/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","password":"testpass123"}'
+```
+
+### Production Deployment
+
+```bash
+# Configure wrangler with Cloudflare credentials
+wrangler login
+
+# Deploy to production
+npm run deploy:prod
+```
+
+### Known Limitations & Future Improvements
+
+1. **Password Hashing:** Current SHA-256 implementation is basic. 
+   - **Improvement:** Upgrade to Argon2 or bcrypt for production
+   - **Impact:** Better protection against brute-force attacks
+
+2. **JWT Secret Management:**
+   - **Current:** Stored in Cloudflare environment variable
+   - **Improvement:** Rotate secrets periodically, use secret management service
+
+3. **Refresh Token Rotation:**
+   - **Current:** Accepts any valid JWT as refresh token
+   - **Improvement:** Implement separate refresh token table with rotation logic
+
+4. **Error Messages:**
+   - **Current:** Generic "Invalid credentials" to prevent email enumeration
+   - **Production:** Ensure consistent error handling across all endpoints
+
+### Next Steps
+
+Phase 3 implementation will add:
+1. Policy management endpoints (create, read, update, delete)
+2. Blocked attempts logging
+3. Panic button activation
+4. User profile endpoints
+5. Basic authorization checks (users can only access own data)
 
 ---
 
